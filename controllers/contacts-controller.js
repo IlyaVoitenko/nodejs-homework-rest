@@ -17,7 +17,6 @@ const getContactByIdController = async (req, res) => {
   const { contactId } = req.params;
   const contact = await getContactById(contactId);
   if (!contact) ErrorHttp(404);
-
   res.status(200).json(contact);
 };
 
