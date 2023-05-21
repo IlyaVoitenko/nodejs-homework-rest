@@ -13,7 +13,9 @@ const getContactById = async (contactId) => {
 };
 
 const updateStatusContact = async (contactId, dataUpdated) => {
-  return await contactsModel.findByIdAndUpdate(contactId, dataUpdated);
+  return await contactsModel.findByIdAndUpdate(contactId, dataUpdated, {
+    new: true,
+  });
 };
 
 const removeContact = async (contactId) => {

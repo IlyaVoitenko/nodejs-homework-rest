@@ -19,8 +19,16 @@ router.post("/", validateRequire(contactAddSchema), createContactController);
 
 router.delete("/:contactId", removeContactController);
 
-router.put("/:contactId", updateContactByIdController);
+router.put(
+  "/:contactId",
+  validateRequire(contactAddSchema),
+  updateContactByIdController
+);
 
-router.patch("/:contactId/favorite", getContactsFavoriteFieldController);
+router.patch(
+  "/:contactId/favorite",
+  validateRequire(contactAddSchema),
+  getContactsFavoriteFieldController
+);
 
 module.exports = router;
