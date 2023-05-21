@@ -1,3 +1,3 @@
 const contactAddSchema = require("./contacts-schema");
-
-module.exports = { contactAddSchema };
+const mongooseShemaContacts = require("./contacts-mongoose-schema");
+module.exports = { contactAddSchema, mongooseShemaContacts };
