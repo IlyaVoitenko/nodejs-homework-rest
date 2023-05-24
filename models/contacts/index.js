@@ -1,8 +1,8 @@
-const { mongooseShemaContacts } = require("../../schemas");
+const { mongooseSchemaContacts } = require("../../schemas");
 const { nanoid } = require("nanoid");
 const mongoose = require("mongoose");
 
-const contactsModel = mongoose.model("contacts", mongooseShemaContacts);
+const contactsModel = mongoose.model("contacts", mongooseSchemaContacts);
 
 const getListContacts = async () => {
   return await contactsModel.find();
