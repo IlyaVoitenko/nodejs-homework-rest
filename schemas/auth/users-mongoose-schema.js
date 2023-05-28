@@ -2,22 +2,25 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
-    name: {
+    password: {
       type: String,
-      required: true,
+      required: [true, "Set password for user"],
     },
     email: {
       type: String,
-      required: true,
+      required: [true, "Email is required"],
+      unique: true,
     },
-    password: {
+    subscription: {
       type: String,
-      required: true,
+      enum: ["starter", "pro", "business"],
+      default: "starter",
+    },
+    token: {
+      type: String,
+      default: "",
     },
   },
-  {
-    versionKey: false,
-    timestamps: true,
-  }
+  { versionKey: false }
 );
 module.exports = userSchema;

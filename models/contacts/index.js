@@ -4,8 +4,10 @@ const mongoose = require("mongoose");
 
 const contactsModel = mongoose.model("contacts", mongooseSchemaContacts);
 
-const getListContacts = async () => {
-  return await contactsModel.find();
+const getListContacts = async (req) => {
+  const { _id: owner } = req.user;
+
+  return await contactsModel.find({ owner });
 };
 
 const getContactById = async (contactId) => {
@@ -22,11 +24,15 @@ const removeContact = async (contactId) => {
   return await contactsModel.findByIdAndDelete(contactId);
 };
 
-const addContact = async (name, email, phone) => {
+const addContact = async (req, res) => {
+  const { _id: owner } = req.user;
+  const { name, phone, email } = req.body;
+
   return await contactsModel.create({
-    name: name,
-    email: email,
-    phone: phone,
+    name,
+    email,
+    phone,
+    owner,
   });
 };
 
@@ -41,4 +47,5 @@ module.exports = {
   addContact,
   updateStatusContact,
   updateContactById,
+  contactsModel,
 };
