@@ -15,7 +15,8 @@ const {
 const createUserController = async (req, res) => {
   const { email, password } = req.body;
   const checkUserByEmail = await getUsersByEmail(email);
-  if (checkUserByEmail) ErrorHttp(409, "users with the email already exists");
+  if (checkUserByEmail)
+    throw ErrorHttp(409, "users with the email already exists");
   await createNewUsers(email, password);
   res.status(201).end();
 };
@@ -23,13 +24,13 @@ const createUserController = async (req, res) => {
 const loginUserController = async (req, res, next) => {
   const { email, password } = req.body;
   const checkUserByEmail = await getUsersByEmail(email);
-  if (!checkUserByEmail) ErrorHttp(400);
+  if (!checkUserByEmail) throw ErrorHttp(400);
   const { _id: id } = checkUserByEmail;
 
   const payload = { id };
   const passwordHash = checkUserByEmail.password;
   const isMatch = await checkPasswordUser(password, passwordHash);
-  if (!isMatch) ErrorHttp(401, "Email or password is wrong");
+  if (!isMatch) throw ErrorHttp(401, "Email or password is wrong");
 
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
   await createTokenUser(id, token);
