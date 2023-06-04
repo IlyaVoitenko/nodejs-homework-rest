@@ -1,6 +1,10 @@
 const { mongooseSchemaContacts } = require("../../schemas");
 const { nanoid } = require("nanoid");
+const path = require("path");
+const fs = require("fs/promises");
 const mongoose = require("mongoose");
+
+const contactsPath = path.resolve("public", "contacts");
 
 const contactsModel = mongoose.model("contacts", mongooseSchemaContacts);
 
@@ -25,13 +29,14 @@ const removeContact = async (contactId) => {
 };
 
 const addContact = async (req, res) => {
+  const { path: oldPath, filename } = req.file;
+  const newPath = path.join(contactsPath, filename);
+  await fs.rename(oldPath, newPath);
+  const avatar = path.join("public", "contacts", filename);
   const { _id: owner } = req.user;
-  const { name, phone, email } = req.body;
-
   return await contactsModel.create({
-    name,
-    email,
-    phone,
+    ...req.body,
+    avatar,
     owner,
   });
 };
