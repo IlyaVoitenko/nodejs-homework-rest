@@ -8,7 +8,7 @@ const {
   createContactController,
 } = require("../../../controllers/contacts-controller");
 const router = express.Router();
-const { isValidId, authenticate, upload } = require("../../../helpers");
+const { isValidId, authenticate } = require("../../../helpers");
 const { contactAddSchema } = require("../../../schemas");
 const { validateRequire } = require("../../../decorators");
 
@@ -18,12 +18,7 @@ router.get("/", getListContactsController);
 
 router.get("/:contactId", isValidId, getContactByIdController);
 
-router.post(
-  "/",
-  upload.single("avatar"),
-  validateRequire(contactAddSchema),
-  createContactController
-);
+router.post("/", validateRequire(contactAddSchema), createContactController);
 
 router.delete("/:contactId", isValidId, removeContactController);
 

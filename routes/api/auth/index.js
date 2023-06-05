@@ -1,6 +1,6 @@
 const { usersJoiSchema, loginJoiSchema } = require("../../../schemas");
 const { validateRequire } = require("../../../decorators");
-const { authenticate } = require("../../../helpers");
+const { authenticate, upload } = require("../../../helpers");
 const {
   createUserController,
   loginUserController,
@@ -11,7 +11,12 @@ const {
 const express = require("express");
 const router = express.Router();
 
-router.post("/register", validateRequire(usersJoiSchema), createUserController);
+router.post(
+  "/register",
+  upload.single("avatar"),
+  validateRequire(usersJoiSchema),
+  createUserController
+);
 router.post("/login", validateRequire(loginJoiSchema), loginUserController);
 router.post("/logout", authenticate, logoutUserController);
 router.get("/current", authenticate, getCurrentUser);
