@@ -1,3 +1,4 @@
+const gravatar = require("gravatar");
 const { ctrlWrappen } = require("../decorators");
 const { ErrorHttp } = require("../helpers");
 const jwt = require("jsonwebtoken");
@@ -17,7 +18,8 @@ const createUserController = async (req, res) => {
   const checkUserByEmail = await getUsersByEmail(email);
   if (checkUserByEmail)
     throw ErrorHttp(409, "users with the email already exists");
-  await createNewUsers(email, password);
+  const avatar = gravatar.url(email, { default: "mp" });
+  await createNewUsers(avatar, email, password);
   res.status(201).end();
 };
 
@@ -54,9 +56,11 @@ const getCurrentUser = async (req, res) => {
   res.json({ email, subscription });
 };
 
+const updateAvatarUser = async (req, res) => {};
 module.exports = {
   createUserController: ctrlWrappen(createUserController),
   loginUserController: ctrlWrappen(loginUserController),
   logoutUserController: ctrlWrappen(logoutUserController),
   getCurrentUser: ctrlWrappen(getCurrentUser),
+  updateAvatarUser: ctrlWrappen(updateAvatarUser),
 };

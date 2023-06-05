@@ -14,11 +14,12 @@ const getUsersByEmail = async (email) => {
 const checkPasswordUser = async (password, passwordHash) => {
   return await bcrypt.compare(password, passwordHash);
 };
-const createNewUsers = async (email, password) => {
+const createNewUsers = async (avatar, email, password) => {
   const passwordHash = await bcrypt.hash(password, 10);
   return await Users.create({
     email: email,
     password: passwordHash,
+    avatarURL: avatar,
   });
 };
 

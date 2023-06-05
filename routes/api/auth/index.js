@@ -5,20 +5,22 @@ const {
   createUserController,
   loginUserController,
   logoutUserController,
+  updateAvatarUser,
   getCurrentUser,
 } = require("../../../controllers/auth-controller");
 
 const express = require("express");
 const router = express.Router();
 
-router.post(
-  "/register",
-  upload.single("avatar"),
-  validateRequire(usersJoiSchema),
-  createUserController
-);
+router.post("/register", validateRequire(usersJoiSchema), createUserController);
 router.post("/login", validateRequire(loginJoiSchema), loginUserController);
 router.post("/logout", authenticate, logoutUserController);
 router.get("/current", authenticate, getCurrentUser);
+router.patch(
+  "/avatars",
+  upload.single("avatar"),
+  authenticate,
+  updateAvatarUser
+);
 
 module.exports = router;
