@@ -1,5 +1,6 @@
 const multer = require("multer");
 const path = require("path");
+const ErrorHttp = require("./ErrorHttp");
 const destination = path.resolve("tmp");
 
 const storage = multer.diskStorage({
@@ -10,11 +11,18 @@ const storage = multer.diskStorage({
     cd(null, newName);
   },
 });
+
 const limits = {
   fileSize: 1024 * 1024,
 };
-const fileFilter = (req, file, cd) => {
-  cd(null, true);
+
+const fileFilter = (req, file, cb) => {
+  const { mimetype } = file;
+  // console.log(file);
+  // if (mimetype !== "image/jpeg" || mimetype !== "image/png") {
+  //   return ErrorHttp(400, "File can have only .jpg or .png extension");
+  // }
+  cb(null, true);
 };
 
 const upload = multer({ storage, limits, fileFilter });

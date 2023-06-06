@@ -2,6 +2,8 @@ const gravatar = require("gravatar");
 const { ctrlWrappen } = require("../decorators");
 const { ErrorHttp } = require("../helpers");
 const jwt = require("jsonwebtoken");
+const path = require("path");
+const fs = require("fs/promises");
 require("dotenv").config();
 const { SECRET_KEY } = process.env;
 const {
@@ -12,6 +14,8 @@ const {
   updateUserById,
   getUserById,
 } = require("../models/users");
+
+const avatarPath = path.resolve("public", "avatars");
 
 const createUserController = async (req, res) => {
   const { email, password } = req.body;
@@ -56,7 +60,15 @@ const getCurrentUser = async (req, res) => {
   res.json({ email, subscription });
 };
 
-const updateAvatarUser = async (req, res) => {};
+const updateAvatarUser = async (req, res) => {
+  const { path: oldPath, filename } = req.file;
+  const newPath = path.join(avatarPath, filename);
+  await fs.rename(oldPath, newPath);
+  const avatar = path.join("avatars", filename);
+
+  res.json(avatar);
+};
+
 module.exports = {
   createUserController: ctrlWrappen(createUserController),
   loginUserController: ctrlWrappen(loginUserController),
