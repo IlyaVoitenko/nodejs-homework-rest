@@ -27,8 +27,8 @@ const createContactController = async (req, res) => {
 };
 
 const removeContactController = async (req, res) => {
-  const { id } = req.params;
-  const deteledContact = await removeContact(id);
+  const { contactId } = req.params;
+  const deteledContact = await removeContact(contactId);
   if (!deteledContact) throw ErrorHttp(404);
   res.status(200).json("contact deleted");
 };
