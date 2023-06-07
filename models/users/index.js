@@ -32,6 +32,11 @@ const updateUserById = async (req, res) => {
 const getUserById = async (id) => {
   return await Users.findById(id);
 };
+
+const updateAvatarUserById = async (req, res) => {
+  const { id, avatarURL } = req.user;
+  await Users.findByIdAndUpdate(id, { avatarURL });
+};
 module.exports = {
   createNewUsers,
   getUsersByEmail,
@@ -39,4 +44,5 @@ module.exports = {
   createTokenUser,
   updateUserById,
   getUserById,
+  updateAvatarUserById,
 };

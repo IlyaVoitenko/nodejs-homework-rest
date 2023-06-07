@@ -12,6 +12,7 @@ const {
   checkPasswordUser,
   createTokenUser,
   updateUserById,
+  updateAvatarUserById,
   getUserById,
 } = require("../models/users");
 
@@ -65,8 +66,9 @@ const updateAvatarUser = async (req, res) => {
   const newPath = path.join(avatarPath, filename);
   await fs.rename(oldPath, newPath);
   const avatar = path.join("avatars", filename);
-
-  res.json(avatar);
+  req.user.avatarURL = avatar;
+  await updateAvatarUserById(req);
+  res.json("avatar updated");
 };
 
 module.exports = {
