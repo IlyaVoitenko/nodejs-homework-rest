@@ -5,4 +5,8 @@ const usersJoiSchema = Joi.object({
   password: Joi.string().required(),
 });
 
-module.exports = usersJoiSchema;
+const verifyUserAgain = Joi.object({
+  email: Joi.string().required(),
+});
+
+module.exports = { usersJoiSchema, verifyUserAgain };

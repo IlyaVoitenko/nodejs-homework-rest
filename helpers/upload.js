@@ -17,11 +17,6 @@ const limits = {
 };
 
 const fileFilter = (req, file, cb) => {
-  const { mimetype } = file;
-  // console.log(file);
-  // if (mimetype !== "image/jpeg" || mimetype !== "image/png") {
-  //   return ErrorHttp(400, "File can have only .jpg or .png extension");
-  // }
   cb(null, true);
 };
 

@@ -21,6 +21,8 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    verify: { type: Boolean, default: false },
+    verificationCode: { type: String },
   },
   { versionKey: false }
 );
