@@ -1,9 +1,8 @@
 const gravatar = require("gravatar");
 const { nanoid } = require("nanoid");
 const { Users } = require("../models/users");
-const sendEmail = require("../helpers/sendEmail");
 const { ctrlWrappen } = require("../decorators");
-const { ErrorHttp } = require("../helpers");
+const { ErrorHttp, cloudinary, sendEmail } = require("../helpers");
 const jwt = require("jsonwebtoken");
 const path = require("path");
 const fs = require("fs/promises");
@@ -79,10 +78,16 @@ const getCurrentUser = async (req, res) => {
 
 const updateAvatarUser = async (req, res) => {
   const { path: oldPath, filename } = req.file;
-  const newPath = path.join(avatarPath, filename);
-  await fs.rename(oldPath, newPath);
-  const avatar = path.join("avatars", filename);
-  req.user.avatarURL = avatar;
+  // const newPath = path.join(avatarPath, filename);
+  // await fs.rename(oldPath, newPath);
+  // const avatar = path.join("avatars", filename);
+  const fileData = await cloudinary.uploader.upload(oldPath, {
+    folder: "avatars",
+  });
+  console.log(fileData);
+  req.user.avatarURL = fileData.url;
+
+  await fs.unlink(oldPath);
   await updateAvatarUserById(req);
   res.json("avatar updated");
 };
