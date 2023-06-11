@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const { ErrorHttp } = require("../helpers");
 
 const { UKR_NET_EMAIL, UKR_NET_PASSWORD } = process.env;
 
@@ -13,7 +14,11 @@ const transport = nodemailer.createTransport(nodemailerConfig);
 
 const sendEmail = async (data) => {
   const email = { ...data, from: UKR_NET_EMAIL };
-  await transport.sendMail(email);
+  await transport.sendMail(email, (error, info) => {
+    if (error) {
+      throw ErrorHttp(401, `send message error: ${error}`);
+    }
+  });
   return true;
 };
 

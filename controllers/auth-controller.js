@@ -34,8 +34,9 @@ const createUserController = async (req, res) => {
   const verifyEmail = {
     to: email,
     subject: "Verify email",
-    html: `<a target="_blanke" href="${PROJECT_URL}/api/auth/verify/${verificationCode}">Click to verify email</a>`,
+    html: `<a  target="_blanke" href="${PROJECT_URL}/api/user/verify/${verificationCode}">Click to verify email</a>`,
   };
+
   await sendEmail(verifyEmail);
   res.status(201).end();
 };
@@ -84,7 +85,6 @@ const updateAvatarUser = async (req, res) => {
   const fileData = await cloudinary.uploader.upload(oldPath, {
     folder: "avatars",
   });
-  console.log(fileData);
   req.user.avatarURL = fileData.url;
 
   await fs.unlink(oldPath);
@@ -115,7 +115,7 @@ const resendVerifyEmail = async (req, res) => {
   const verifyEmail = {
     to: email,
     subject: "Verify email",
-    html: `<a target="_blanke" href="${PROJECT_URL}/api/auth/verify/${user.verificationCode}">Click to verify email</a>`,
+    html: `<a target="_blanke" href="${PROJECT_URL}/api/user/verify/${user.verificationCode}">Click to verify email</a>`,
   };
 
   await sendEmail(verifyEmail);
