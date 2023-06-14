@@ -7,7 +7,7 @@ const { getUserById } = require("../models/users");
 const authenticate = async (req, res, next) => {
   const { authorization = "" } = req.headers;
   const [bearer, token] = authorization.split(" ");
-  if (bearer !== "Bearer") return next(ErrorHttp(401));
+  if (bearer !== "Bearer" || !token) return next(ErrorHttp(401));
   try {
     const { id } = jwt.verify(token, SECRET_KEY);
     const user = await getUserById(id);
