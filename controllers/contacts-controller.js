@@ -23,6 +23,8 @@ const getContactByIdController = async (req, res) => {
 
 const createContactController = async (req, res) => {
   const newContact = await addContact(req);
+  if (!newContact) throw ErrorHttp(404, "contact not found");
+
   res.status(201).json(newContact);
 };
 

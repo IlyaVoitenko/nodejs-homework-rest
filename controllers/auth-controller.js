@@ -59,7 +59,7 @@ const loginUserController = async (req, res, next) => {
   await createTokenUser(id, token);
   res.json({
     user: {
-      ...user,
+      ...user._doc,
     },
   });
 };
