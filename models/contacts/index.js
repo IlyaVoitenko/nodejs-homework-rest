@@ -8,7 +8,6 @@ const contactsModel = mongoose.model("contacts", mongooseSchemaContacts);
 
 const getListContacts = async (req) => {
   const { _id: owner } = req.user;
-
   return await contactsModel.find({ owner });
 };
 
