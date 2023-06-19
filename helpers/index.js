@@ -4,7 +4,6 @@ const authenticate = require("./authenticate");
 const upload = require("./upload");
 const cloudinary = require("./cloudinary");
 const sendEmail = require("./sendEmail");
-const corsOrigine = require("./corsOrigin");
 
 module.exports = {
   ErrorHttp,
@@ -13,5 +12,4 @@ module.exports = {
   upload,
   cloudinary,
   sendEmail,
-  corsOrigine,
 };

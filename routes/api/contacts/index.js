@@ -9,13 +9,12 @@ const {
   createContactController,
 } = require("../../../controllers/contacts-controller");
 const router = express.Router();
-const { isValidId, authenticate, corsOrigine } = require("../../../helpers");
+const { isValidId, authenticate } = require("../../../helpers");
 const { contactAddSchema } = require("../../../schemas");
 const { validateRequire } = require("../../../decorators");
 
 router.use(authenticate);
 router.use(cors());
-router.use(corsOrigine);
 
 router.get("/", getListContactsController);
 

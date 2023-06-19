@@ -1,4 +1,3 @@
-const { PROJECT_URL } = process.env;
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
@@ -23,9 +22,9 @@ app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
 });
 
-app.get("/cors", (req, res) => {
-  res.set("Access-Control-Allow-Origin", "*");
-  res.send({ msg: "This has CORS enabled 🎈" });
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
 });
 
 app.use((err, req, res, next) => {
