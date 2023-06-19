@@ -23,6 +23,11 @@ app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
 });
 
+app.get("/cors", (req, res) => {
+  res.set("Access-Control-Allow-Origin", "*");
+  res.send({ msg: "This has CORS enabled 🎈" });
+});
+
 app.use((err, req, res, next) => {
   const { status = 500, message = "server error" } = err;
   res.status(status).json({ message });

@@ -9,7 +9,6 @@ const {
   createContactController,
 } = require("../../../controllers/contacts-controller");
 const router = express.Router();
-const { PROJECT_URL } = process.env;
 const { isValidId, authenticate, corsOrigine } = require("../../../helpers");
 const { contactAddSchema } = require("../../../schemas");
 const { validateRequire } = require("../../../decorators");
