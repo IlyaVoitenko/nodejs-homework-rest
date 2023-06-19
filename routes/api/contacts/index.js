@@ -18,7 +18,7 @@ const corsConfig = { origin: [PROJECT_URL] };
 router.use(authenticate);
 router.use(cors(corsConfig));
 
-router.get("/", cors(), getListContactsController);
+router.get("/", cors(corsConfig), getListContactsController);
 
 router.get("/:contactId", isValidId, getContactByIdController);
 
