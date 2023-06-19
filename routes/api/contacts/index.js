@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const {
   updateContactByIdController,
   getListContactsController,
@@ -8,13 +9,16 @@ const {
   createContactController,
 } = require("../../../controllers/contacts-controller");
 const router = express.Router();
+const { PROJECT_URL } = process.env;
 const { isValidId, authenticate } = require("../../../helpers");
 const { contactAddSchema } = require("../../../schemas");
 const { validateRequire } = require("../../../decorators");
+const corsConfig = { origin: [PROJECT_URL] };
 
 router.use(authenticate);
+router.use(cors(corsConfig));
 
-router.get("/", getListContactsController);
+router.get("/", cors(), getListContactsController);
 
 router.get("/:contactId", isValidId, getContactByIdController);
 

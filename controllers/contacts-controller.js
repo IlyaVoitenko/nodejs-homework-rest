@@ -11,6 +11,8 @@ const {
 
 const getListContactsController = async (req, res) => {
   const listContacts = await getListContacts(req);
+  if (!listContacts) throw ErrorHttp(404, "contacts not found");
+
   res.status(200).json(listContacts);
 };
 
