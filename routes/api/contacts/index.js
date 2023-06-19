@@ -14,13 +14,12 @@ const { isValidId, authenticate } = require("../../../helpers");
 const { contactAddSchema } = require("../../../schemas");
 const { validateRequire } = require("../../../decorators");
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: ["http://localhost:3000"],
   methods: ["POST", "GET", "DELETE", "PUT", "PATCH"],
 };
 router.use(authenticate);
-
-router.options("/", cors(corsOptions));
-router.get("/", cors(corsOptions), getListContactsController);
+router.use(cors(corsOptions));
+router.get("/", getListContactsController);
 
 router.get("/:contactId", isValidId, getContactByIdController);
 
