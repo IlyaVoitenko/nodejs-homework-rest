@@ -14,7 +14,7 @@ const { isValidId, authenticate } = require("../../../helpers");
 const { contactAddSchema } = require("../../../schemas");
 const { validateRequire } = require("../../../decorators");
 const corsOptions = {
-  origin: true,
+  origin: "http://localhost:3000",
   methods: ["POST", "GET", "DELETE", "PUT", "PATCH"],
 };
 router.use(authenticate);
