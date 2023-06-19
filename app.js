@@ -1,3 +1,4 @@
+const { PROJECT_URL } = process.env;
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
@@ -9,9 +10,10 @@ const app = express();
 require("dotenv").config();
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
+const corsConfig = { origin: [PROJECT_URL] };
 
 app.use(logger(formatsLogger));
-app.use(cors());
+app.use(cors(corsConfig));
 app.use(express.json());
 app.use(express.static("public"));
 
