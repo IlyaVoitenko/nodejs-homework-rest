@@ -10,15 +10,14 @@ const {
 } = require("../../../controllers/contacts-controller");
 const router = express.Router();
 const { PROJECT_URL } = process.env;
-const { isValidId, authenticate } = require("../../../helpers");
+const { isValidId, authenticate, corsOrigine } = require("../../../helpers");
 const { contactAddSchema } = require("../../../schemas");
 const { validateRequire } = require("../../../decorators");
-const corsOptions = {
-  origin: ["http://localhost:3000"],
-  methods: ["POST", "GET", "DELETE", "PUT", "PATCH"],
-};
+
 router.use(authenticate);
-router.use(cors(corsOptions));
+router.use(cors());
+router.use(corsOrigine);
+
 router.get("/", getListContactsController);
 
 router.get("/:contactId", isValidId, getContactByIdController);
