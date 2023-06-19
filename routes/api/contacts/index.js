@@ -13,10 +13,14 @@ const { PROJECT_URL } = process.env;
 const { isValidId, authenticate } = require("../../../helpers");
 const { contactAddSchema } = require("../../../schemas");
 const { validateRequire } = require("../../../decorators");
-
+const corsOptions = {
+  origin: true,
+  methods: ["POST", "GET", "DELETE", "PUT", "PATCH"],
+};
 router.use(authenticate);
 
-router.get("/", getListContactsController);
+router.options("/", cors(corsOptions));
+router.get("/", cors(corsOptions), getListContactsController);
 
 router.get("/:contactId", isValidId, getContactByIdController);
 
