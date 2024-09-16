@@ -5,9 +5,10 @@ const errorMesages = {
   403: "Forbidden",
   404: "Not Found",
   409: "Conflict",
+  500: "Server error",
 };
 
-const ErrorHttp = (status, massage = errorMesages[status]) => {
+const ErrorHttp = (status = 500, massage = errorMesages[status]) => {
   const error = new Error(massage);
   error.status = status;
   throw error;
